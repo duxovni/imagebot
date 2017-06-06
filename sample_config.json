@@ -1,0 +1,16 @@
+{
+    "base_url": "https://botsin.space",
+    "client_id": "0dd...65d",
+    "client_secret": "a7e...6b7",
+    "access_token": "9af...d33",
+
+    "post_interval": 30,
+
+    "required_tags": ["rating:s"],
+    "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi"],
+
+    "message": "I'm just a bot, but I'll forward your message in a DM to my human maintainer:",
+    "maintainer": "dukhovni@mastodon.mit.edu",
+
+    "state_file": "/home/mastodon/imagebot/state"
+}
