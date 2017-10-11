@@ -100,7 +100,11 @@ class ImageBot:
                     logging.debug('No previous state found')
 
     def handle_notifications(self):
-        notifications = self.api.notifications()
+        try:
+            notifications = self.api.notifications()
+        except Exception as e:
+            logging.error('Exception while fetching notifications: %s', e)
+            return
         ln_changed = False
                                                 
         if isinstance(notifications, dict) and ('error' in notifications):
