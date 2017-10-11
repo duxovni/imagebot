@@ -206,7 +206,10 @@ class ImageBot:
 
         image = self.image_list.pop(random.randrange(len(self.image_list)))
         try:
-            with urllib.request.urlopen(DANBOORU_URL + image['file_url']) as u:
+            req = urllib.request.Request(DANBOORU_URL + image['file_url'],
+                                         headers={"Referer": DANBOORU_URL + "/posts/" + str(image['id']),
+                                                  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0"})
+            with urllib.request.urlopen(req) as u:
                 image_data = u.read()
             image_type = mime.from_buffer(image_data)
             if image_type not in ALLOWED_MIME_TYPES:
