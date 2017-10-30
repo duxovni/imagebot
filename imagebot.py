@@ -114,7 +114,7 @@ class ImageBot:
             # if this is the first time the bot is running, don't autorespond
             # retroactively
             if len(notifications) > 0:
-                self.last_notification = notifications[0]['id']
+                self.last_notification = int(notifications[0]['id'])
                 logging.debug('Ignoring previous notifications up to %d', self.last_notification)
             else:
                 self.last_notification = 0
@@ -122,13 +122,13 @@ class ImageBot:
         else:
             # reversed order to process notification in chronological order
             for notification in notifications[::-1]:
-                if notification['id'] <= self.last_notification:
+                if int(notification['id']) <= self.last_notification:
                     continue
                 if notification['type'] != 'mention':
                     continue
 
-                logging.debug('Handling notification %d', notification['id'])
-                self.last_notification = notification['id']
+                logging.debug('Handling notification %s', notification['id'])
+                self.last_notification = int(notification['id'])
                 ln_changed = True
 
                 text = html_to_text(notification['status']['content'])
