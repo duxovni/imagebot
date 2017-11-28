@@ -7,7 +7,7 @@
     "post_interval": 30,
 
     "required_tags": ["rating:s"],
-    "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi"],
+    "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi", "guro"],
 
     "message": "I'm just a bot, but I'll forward your message in a DM to my human maintainer:",
     "maintainer": "dukhovni@mastodon.mit.edu",
