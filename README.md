@@ -50,7 +50,7 @@ virtualenv -p python3 env
 source env/bin/activate
 
 # 3. install the dependencies
-pip install Mastodon.py==1.0.7
+pip install Mastodon.py==1.2.2
 pip install beautifulsoup4==4.6.0
 pip install pybooru==4.1.0
 pip install python-magic==0.4.13
