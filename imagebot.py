@@ -153,7 +153,7 @@ class ImageBot:
                     continue
 
                 response = '@{} {}'.format(
-                    sender,
+                    self.config.maintainer,
                     self.config.message)
 
                 response_sent = self.api.status_post(response,
@@ -162,7 +162,7 @@ class ImageBot:
 
                 if notification['status']['visibility'] != 'public':
                     # the bot was sent a DM, we should forward that too
-                    recipient_prefix = ' '.join('@'+x for x in [self.config.maintainer, sender])
+                    recipient_prefix = ' '.join('@'+x for x in [self.config.maintainer])
                     prev_part_id = response_sent['id']
                     for part in split_into_toots(recipient_prefix, text):
                         part_sent = self.api.status_post(part,
