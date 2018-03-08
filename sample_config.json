@@ -9,7 +9,7 @@
     "required_tags": ["rating:s"],
     "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi", "guro"],
 
-    "message": "I'm just a bot, but I'll forward your message in a DM to my human maintainer:",
+    "message": "Forwarding received message",
     "maintainer": "dukhovni@mastodon.mit.edu",
 
     "state_file": "/home/mastodon/imagebot/state"
