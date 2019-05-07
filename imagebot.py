@@ -190,6 +190,7 @@ class ImageBot:
                 self.image_list = [image for image in unfiltered_images
                                    if 'file_url' in image
                                    and image['source']
+                                   and 'bad_id' not in image['tag_string_meta']
                                    and not any(tag in image['tag_string'] for tag in self.config.forbidden_tags)]
             except Exception as e:
                 logging.error('exception while fetching candidate images: %s', e)
