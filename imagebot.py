@@ -18,6 +18,7 @@ DELETE_CMD = '$delete'
 DANBOORU_URL = 'https://danbooru.donmai.us'
 DANBOORU_MAX_ATTEMPTS = 10
 ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif']
+PIXIV_SOURCE_PATTERN = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=%s'
 
 mime = magic.Magic(mime=True)
 
@@ -183,28 +184,19 @@ class ImageBot:
 
 
     def post_image(self):
-        if not self.image_list:
-            max_page = 1000
-            attempts = 0
-            while not self.image_list and max_page > 0 and attempts < DANBOORU_MAX_ATTEMPTS:
-                attempts += 1
-                try:
-                    unfiltered_images = self.danbooru.post_list(tags=' '.join(self.config.required_tags), page=str(random.randint(1, max_page)))
-                    if unfiltered_images == []:
-                        max_page //= 2
-                        continue
-                    self.image_list = [image for image in unfiltered_images
-                             if '.png' not in image['source']
-                             and '.jpg' not in image['source']
-                             and image['source'] != ''
-                             and not any(tag in image['tag_string'] for tag in self.config.forbidden_tags)]
-                except:
-                    self.image_list = None
-            if not self.image_list:
-                logging.error("No images found")
-                return
+        while not self.image_list:
+            try:
+                unfiltered_images = self.danbooru.post_list(tags=' '.join(self.config.required_tags), limit=100, random=True)
+                self.image_list = [image for image in unfiltered_images
+                                   if image['file_url']
+                                   and image['source']
+                                   and not any(tag in image['tag_string'] for tag in self.config.forbidden_tags)]
+            except Exception as e:
+                logging.error('exception while fetching candidate images: %s', e)
+                self.image_list = None
 
-        image = self.image_list.pop(random.randrange(len(self.image_list)))
+        image = self.image_list.pop()
+        source = (PIXIV_SOURCE_PATTERN % image['pixiv_id']) if image['pixiv_id'] else image['source']
         try:
             req = urllib.request.Request(image['file_url'],
                                          headers={"Referer": DANBOORU_URL + "/posts/" + str(image['id']),
@@ -216,7 +208,7 @@ class ImageBot:
                 logging.error('unknown mime type %s for file %s', image_type, image['file_url'])
                 return
             media = self.api.media_post(image_data, image_type)
-            self.api.status_post('{0}/posts/{1}\nsource: {2}'.format(DANBOORU_URL, image['id'], image['source']), media_ids=[media['id']], visibility='unlisted')
+            self.api.status_post('{0}/posts/{1}\nsource: {2}'.format(DANBOORU_URL, image['id'], source), media_ids=[media['id']], visibility='unlisted')
             logging.info('posted image: %d', image['id'])
         except Exception as e:
             logging.error('exception while posting image %d: %s', image['id'], e)
