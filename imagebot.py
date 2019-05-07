@@ -209,7 +209,7 @@ class ImageBot:
                 logging.error('unknown mime type %s for file %s', image_type, image['file_url'])
                 return
             media = self.api.media_post(image_data, image_type)
-            self.api.status_post('{0}/posts/{1}\nsource: {2}'.format(DANBOORU_URL, image['id'], source), media_ids=[media['id']], visibility='unlisted')
+            self.api.status_post('{0}/posts/{1}\nsource: {2}'.format(DANBOORU_URL, image['id'], source), media_ids=[media['id']], visibility='unlisted', sensitive=True)
             logging.info('posted image: %d', image['id'])
         except Exception as e:
             logging.error('exception while posting image %d: %s', image['id'], e)
