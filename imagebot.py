@@ -188,7 +188,7 @@ class ImageBot:
             try:
                 unfiltered_images = self.danbooru.post_list(tags=' '.join(self.config.required_tags), limit=100, random=True)
                 self.image_list = [image for image in unfiltered_images
-                                   if image['file_url']
+                                   if 'file_url' in image
                                    and image['source']
                                    and not any(tag in image['tag_string'] for tag in self.config.forbidden_tags)]
             except Exception as e:
