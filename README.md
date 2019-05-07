@@ -20,7 +20,7 @@ The bot is configured in a JSON file that looks like this:
     "post_interval": 30,
 
     "required_tags": ["rating:s"],
-    "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi"],
+    "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi", "guro"],
 
     "message": "I'm just a bot, but I'll forward your message in a DM to my human maintainer:",
     "maintainer": "dukhovni@mastodon.mit.edu",
@@ -43,17 +43,14 @@ This should really be packaged as a proper Python package, but I haven't done th
 
 ```
 # 1. clone this repo
-git clone git@github.com:sdukhovni/imagebot.git
+git clone git@github.com:duxovni/imagebot.git
 
 # 2. set up a virtual environment for Python and activate it
 virtualenv -p python3 env
 source env/bin/activate
 
 # 3. install the dependencies
-pip install Mastodon.py==1.2.2
-pip install beautifulsoup4==4.6.0
-pip install pybooru==4.1.0
-pip install python-magic==0.4.13
+pip install Mastodon.py beautifulsoup4 pybooru python-magic
 
 # 4. use tokentool to register the bot as an app on your server,
 # then authenticate to it (don't worry, it's not hard, there's a nice
