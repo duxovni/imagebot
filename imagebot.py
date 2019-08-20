@@ -42,6 +42,7 @@ class Config:
         self.required_tags = json['required_tags']
         self.forbidden_tags = json['forbidden_tags']
 
+        self.forward_messages = json['forward_messages']
         self.message = json['message'] + ' @' + json['maintainer']
         self.maintainer = json['maintainer']
 
@@ -147,6 +148,9 @@ class ImageBot:
                         logging.error('exception while deleting status %d: %s', notification['status']['in_reply_to_id'], e)
 
                 if sent_by_maintainer:
+                    continue
+
+                if not self.forward_messages:
                     continue
 
                 if self.config.maintainer in {account['acct'] for account in notification['status']['mentions']}:

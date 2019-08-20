@@ -9,6 +9,7 @@
     "required_tags": ["rating:s"],
     "forbidden_tags": ["comic", "animated", "sexual_harassment", "nazi", "guro"],
 
+    "forward_messages": true,
     "message": "Forwarding received message",
     "maintainer": "dukhovni@mastodon.mit.edu",
 
