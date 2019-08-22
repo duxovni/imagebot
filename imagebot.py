@@ -150,7 +150,7 @@ class ImageBot:
                 if sent_by_maintainer:
                     continue
 
-                if not self.forward_messages:
+                if not self.config.forward_messages:
                     continue
 
                 if self.config.maintainer in {account['acct'] for account in notification['status']['mentions']}:
